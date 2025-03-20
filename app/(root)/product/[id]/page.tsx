@@ -3,7 +3,7 @@ import { notFound } from 'next/navigation'
 
 import { Container, GroupVariants, Title } from '@/components/shared'
 
-import categories from '@/data'
+import categories from '@/prisma/data'
 
 //этот компонент открывает страницу по id
 export default async function ProductPage({ params: { id }, }: { params: { id: string } }) {

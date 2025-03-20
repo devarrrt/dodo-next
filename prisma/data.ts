@@ -6,7 +6,14 @@ const categories = [
       {
         productId: 1,
         name: 'Сырная',
-        items: [{ price: 300 }],
+        items: [
+          { price: 300, size: 20, pizzaType: 1 },
+          { price: 310, size: 20, pizzaType: 2 },
+          { price: 420, size: 30, pizzaType: 1 },
+          { price: 430, size: 30, pizzaType: 2 },
+          { price: 550, size: 40, pizzaType: 1 },
+          { price: 560, size: 40, pizzaType: 2 },
+        ],
         categoryId: 1,
         imageUrl: 'https://media.dodostatic.net/image/r:584x584/11EF9C1DAAFCF3529A62947B9522A8FE.avif',
         ingredients: [{
@@ -16,6 +23,7 @@ const categories = [
           imageUrl: 'https://cdn.dodostatic.net/static/Img/Ingredients/99f5cb91225b4875bd06a26d2e842106.png',
         },
         {
+          id: 2,
           productId: 2,
           categoryId: 1,
           name: 'Сыры чеддер и пармезан',
@@ -23,6 +31,7 @@ const categories = [
           imageUrl: 'https://cdn.dodostatic.net/static/Img/Ingredients/000D3A22FA54A81411E9AFA69C1FE796',
         },
         {
+            id: 3,
           productId: 3,
           categoryId: 1,
           name: 'Острый перец халапеньо',
@@ -35,7 +44,11 @@ const categories = [
       {
         productId: 2,
         name: 'Кола-барбекю',
-        items: [{ price: 590 }],
+         items: [
+          { price: 420, size: 20, pizzaType: 1 },
+          { price: 490, size: 30, pizzaType: 2 },
+          { price: 550, size: 40, pizzaType: 2 },
+        ],
         categoryId: 1,
         imageUrl: 'https://media.dodostatic.net/image/r:584x584/11EF9050501F3FA690A64053F5F07626.avif',
         ingredients: [{
@@ -62,7 +75,11 @@ const categories = [
       {
         productId: 3,
         name: 'Пепперони фреш',
-        items: [{ price: 590 }],
+        items: [
+          { price: 410, size: 20, pizzaType: 1 },
+          { price: 450, size: 30, pizzaType: 2 },
+          { price: 520, size: 40, pizzaType: 2 },
+        ],
         categoryId: 1,
         imageUrl: 'https://media.dodostatic.net/image/r:584x584/11EE7D612FC7B7FCA5BE822752BEE1E5.avif',
         ingredients: [{
@@ -98,7 +115,7 @@ const categories = [
         },
 
         ],
-      },
+      }, 
     ]
   },
   {

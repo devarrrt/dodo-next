@@ -1,6 +1,6 @@
 import { Container, Title, TopBar, Filters, ProductsGroupList } from '@/components/shared'
 
-import categories from '@/data'
+import categories from '@/prisma/data'
 
 export default async function Home() {
   return (

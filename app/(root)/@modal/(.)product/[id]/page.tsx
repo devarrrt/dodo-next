@@ -1,7 +1,7 @@
 import React from 'react'
 import { notFound } from 'next/navigation'
 
-import categories from '@/data'
+import categories from '@/prisma/data'
 
 import { ChooseProductModal, Container, GroupVariants, Title } from '@/components/shared'
 

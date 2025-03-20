@@ -3,6 +3,7 @@ import { ProductWithRelations } from '@/@types/prisma'
 
 import { ChoosePizzaForm } from './choose-pizza-form'
 import { ChooseProductForm } from './choose-product-form'
+import { log } from 'console'
 
 interface Props {
   product: ProductWithRelations
@@ -13,6 +14,8 @@ export const ProductForm: React.FC<Props> = ({ product, onSubmit }) => {
 
   const isPizza = product?.categoryId === 1
   const firstItem = product.items[0]
+
+  console.log(product,'product')
 
   if (isPizza) {
     return (
