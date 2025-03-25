@@ -1,16 +1,20 @@
 'use client'
 
-import React, { useEffect, useState } from 'react'
-import { cn } from '@/lib/utils'
-import { useSet } from 'react-use'
+import React from 'react'
 
-import { Title } from '../shared/title'
-import { Button } from '../ui'
 import { GroupVariants } from './group-variants'
 import { IngredientItem } from './ingredient-item'
 import { PizzaImage } from './pizza-image'
 
+import { Title } from '../shared/title'
+import { Button } from '../ui'
+
 import { PizzaSize, pizzaSizes, PizzaType, pizzaTypes, mapPizzaType } from '@/constants/pizza'
+
+import { calcTotalPizzaPrice } from '@/lib'
+import { cn } from '@/lib/utils'
+
+import { usePizzaOptions } from '@/hooks'
 
 import { Ingredient, ProductItem } from '@/@types/prisma'
 interface Props {
@@ -26,18 +30,18 @@ interface Props {
 }
 
 export const ChoosePizzaForm: React.FC<Props> = ({ className, imageUrl, name, price, ingredients, items, loading, onSubmit, onClickAddCart }) => {
+  const {
+    size,
+    type,
+    selectedIngredients,
+    allAvailablePizzasSizes,
+    currentItemId,
+    setSize,
+    setType,
+    toggleIngredients,
+  } = usePizzaOptions(items)
 
-  const [selectedIngredients, { toggle: toggleIngredients }] = useSet(new Set<number>([]))
-  const [size, setSize] = useState<PizzaSize>(40)
-  const [type, setType] = useState<PizzaType>(1)
-
-  const pizzaPrice = items.find(el => el.pizzaType === type && el.size === size)?.price
-
-  const totalIngredientsPrice = ingredients
-    ?.filter(el => selectedIngredients?.has(el?.id))
-    .reduce((acc, ingredient) => acc + ingredient.price, 0)
-
-  const totalPrice = pizzaPrice + totalIngredientsPrice
+  const totalPrice = calcTotalPizzaPrice(type, size, items, ingredients, selectedIngredients)
 
   const textDetaills = `${size} см, ${mapPizzaType[type]} тесто`
 
@@ -50,23 +54,6 @@ export const ChoosePizzaForm: React.FC<Props> = ({ className, imageUrl, name, pr
     })
   }
 
-  const pizzaByTypes = items?.filter((item) => item.pizzaType === type)
-
-  const availablePizzaSizes = pizzaSizes.map(el => ({
-    name: el.name,
-    value: el.value,
-    disabled: !pizzaByTypes.some(pizza => Number(pizza.size) === Number(el.value))
-  }))
-
-  useEffect(() => {
-    const availablePizzas = availablePizzaSizes?.find(el => !el.disabled)
-
-    if (availablePizzas){
-      setSize(Number(availablePizzas.value) as PizzaSize)
-    }
-
-  }, [type])
-
   return (
     <div className={cn(className, 'flex flex-1')}>
       <PizzaImage imageUrl={imageUrl} size={size} />
@@ -74,7 +61,7 @@ export const ChoosePizzaForm: React.FC<Props> = ({ className, imageUrl, name, pr
         <Title text={name} size="md" className="font-extrabold mb-1" />
         <p className="text-gray-400">{textDetaills}</p>
         <GroupVariants
-          items={availablePizzaSizes}
+          items={allAvailablePizzasSizes}
           value={String(size)}
           onClick={(value) => setSize(Number(value) as PizzaSize)} />
         <GroupVariants
